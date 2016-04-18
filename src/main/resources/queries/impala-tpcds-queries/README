@@ -1,0 +1,6 @@
+These queries are taken from the current impala-tpcds-kit.  It's not clear which version of TPC-DS they are based on
+https://github.com/cloudera/impala-tpcds-kit/tree/c899efba3358fdd1bb155a8c9afc908570b4c407
+
+Note that the current impala-tpcds-kit queries are different to these old queries.
+
+There are many more queries here, but some of them don't compile, and it's not clear whether they are "good" or not with Spark.  The previous versions of the queries had modifications to give hints to spark on how to efficiently run the queries.  We include the queries here for reference and completeness.

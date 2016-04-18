@@ -1,0 +1,26 @@
+Usage:
+
+To compile, invoke
+
+	mvn clean package
+
+To generate data with spark
+
+	bin/spark-submit --master yarn --class edu.brown.cs.systems.tpcds.spark.SparkTPCDSDataGenerator ~/tpcds/tpcds-workload-gen/target/spark-workloadgen-4.0-jar-with-dependencies.jar
+	
+To run:
+
+	bin/spark-submit --master yarn --class edu.brown.cs.systems.tpcds.spark.SparkTPCDSWorkloadGenerator ~/tpcds/tpcds-workload-gen/target/spark-workloadgen-4.0-jar-with-dependencies.jar
+
+Benchmark config:
+	
+	tpcds {
+		scaleFactor = 1
+		dataLocation = "hdfs://127.0.0.1:9000/tpcds"
+		dataFormat = "parquet"
+		overwrite = true
+		partitionTables = false
+		useDoubleForDecimal = false
+		clusterByPartitionColumns = false
+		filterOutNullPartitionValues = false
+	}

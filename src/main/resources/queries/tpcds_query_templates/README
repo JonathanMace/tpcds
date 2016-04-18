@@ -1,0 +1,1 @@
+These queries are the original queries that come from tpcds.  They probably don't directly work with spark, but they're included here for completeness.

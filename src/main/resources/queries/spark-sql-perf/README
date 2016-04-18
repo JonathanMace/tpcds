@@ -1,0 +1,6 @@
+These queries are from spark-sql-perf.  They are from TPCDS_1_4_Queries.scala, which seem to be modified versions of the impala queries.
+
+> This implements the official TPCDS v1.4 queries with only cosmetic modifications
+> (noted for each query).
+> Don't modify this except for these kind of modifications.
+ 

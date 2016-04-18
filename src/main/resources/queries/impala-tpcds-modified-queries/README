@@ -1,0 +1,15 @@
+These queries are older queries from impala-tpcds-kit.  They are based on version 1.1 of TPC-DS
+https://github.com/cloudera/impala-tpcds-kit/tree/v1.4/queries-sql92-modified/queries/shark
+
+Note that the current impala-tpcds-kit queries are different to these old queries.
+
+To quote from their page:
+> For Shark to function/execute queries correctly we had to add MapJoin hints. All the shark queries along with RDD creation sql can be found in shark subdir.
+
+They have been used and referenced by several prior work.  For example, the following two Cloudera blog posts use the modified queries as a benchmark:
+ - http://blog.cloudera.com/blog/2014/01/impala-performance-dbms-class-speed/
+ - https://blog.cloudera.com/blog/2014/05/new-sql-choices-in-the-apache-hadoop-ecosystem-why-impala-continues-to-lead/
+ 
+This set of queries was also used in the paper "Making sense of performance in data analytics frameworks" by Ousterhout et. al.
+https://www.usenix.org/system/files/conference/nsdi15/nsdi15-paper-ousterhout.pdf
+
