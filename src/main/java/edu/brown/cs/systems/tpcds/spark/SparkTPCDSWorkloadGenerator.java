@@ -9,6 +9,7 @@ import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -29,7 +30,7 @@ public class SparkTPCDSWorkloadGenerator {
 	public static SQLContext spinUpWithDefaults() {
 		SparkConf c = new SparkConf().setAppName("SparkTPCDSWorkloadGenerator");
 		SparkContext sc = new SparkContext(c);
-		SQLContext sql = new SQLContext(sc);
+		SQLContext sql = new HiveContext(sc);
 		loadExistingTablesIntoMemory(sql, TPCDSSettings.dataLocation(), TPCDSSettings.dataFormat());
 		return sql;
 	}
