@@ -30,24 +30,24 @@ public class SparkTPCDSWorkloadGenerator {
 	 * @return SQL context with tables loaded
 	 */
 	public static SQLContext spinUpWithDefaults() {
-		SparkConf c = new SparkConf().setAppName("SparkTPCDSWorkloadGenerator");
-		SparkContext sc = new SparkContext(c);
-		SQLContext sql = new HiveContext(sc);
-		loadExistingTablesIntoMemory(sql, TPCDSSettings.dataLocation(), TPCDSSettings.dataFormat());
-		return sql;
+		return spinUp("SparkTPCDSWorkloadGenerator", TPCDSSettings.createWithDefaults());
 	}
 	
-	/** Loads tpcds tables into memory on Spark from a source location, eg from HDFS.
-	 * 
-	 * @param sql A SQLContext to load the tables
-	 * @param dataLocation The location of the TPC-DS data, eg "/Users/jon/tpcds/data", "hdfs://127.0.0.1:9000/tpcds/data", etc.
-	 * @param dataFormat The format of the generated data, eg "text", "parquet", etc.
-	 */
-	public static void loadExistingTablesIntoMemory(SQLContext sql, String dataLocation, String dataFormat) {
+	public static SQLContext spinUp(String name, TPCDSSettings settings) {
+		SparkConf c = new SparkConf().setAppName(name);
+		SparkContext sc = new SparkContext(c);
+		SQLContext sqlContext = new HiveContext(sc);
+		loadExistingTablesIntoMemory(sqlContext, settings);
+		return sqlContext;
+	}
+	
+	/** Loads tpcds tables into memory in Spark from a source location, eg from HDFS.
+	 * Only uses the dataLocation and dataFormat settings. */
+	public static void loadExistingTablesIntoMemory(SQLContext sqlContext, TPCDSSettings settings) {
 		/* Tables constructor takes dsdgenDir and scaleFactor, but they are not used when loading existing data.
 		 * So we just use default values for these instead of adding them as confusing and unused parameters */
-		Tables tables = new Tables(sql, TPCDSSettings.scaleFactor());
-		tables.createTemporaryTables(dataLocation, dataFormat, "");
+		Tables tables = new Tables(sqlContext, settings.scaleFactor);
+		tables.createTemporaryTables(settings.dataLocation, settings.dataFormat, "");
 	}
 	
 	

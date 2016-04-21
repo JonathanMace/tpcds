@@ -6,36 +6,43 @@ import org.apache.spark.sql.hive.HiveContext;
 
 import com.databricks.spark.sql.perf.tpcds.Tables;
 
-import edu.brown.cs.systems.tpcds.Dsdgen;
-
 public class SparkTPCDSDataGenerator {
 
+	/** Generate data using the default dataset settings */
 	public static void generateData() {
-		generateData(TPCDSSettings.dataLocation(), TPCDSSettings.dataFormat(),
-				TPCDSSettings.scaleFactor());
+		generateData(TPCDSSettings.createWithDefaults());
 	}
 
+	/**
+	 * Generate data using some default dataset settings, overridding the
+	 * specified values
+	 */
 	public static void generateData(String location, String format, int scaleFactor) {
-		generateData(location, format, scaleFactor, TPCDSSettings.overwrite(),
-				TPCDSSettings.partitionTables(), TPCDSSettings.useDoubleForDecimal(),
-				TPCDSSettings.clusterByPartitionColumns(), TPCDSSettings.filterOutNullPartitionValues());
+		TPCDSSettings settings = TPCDSSettings.createWithDefaults();
+		settings.dataLocation = location;
+		settings.dataFormat = format;
+		settings.scaleFactor = scaleFactor;
+		generateData(settings);
 	}
 
-	public static void generateData(String location, String format, int scaleFactor,
-			boolean overwrite, boolean partitionTables, boolean useDoubleForDecimal, boolean clusterByPartitionColumns,
-			boolean filterOutNullPartitionValues) {
+	/** Generate data using the specified dataset settings */
+	public static void generateData(TPCDSSettings settings) {
 		SparkConf conf = new SparkConf().setAppName("TPC-DS generateData");
 		SparkContext sc = new SparkContext(conf);
-		HiveContext sql = new HiveContext(sc);
-		Tables tables = new Tables(sql, scaleFactor);
-		tables.genData(location, format, overwrite, partitionTables, useDoubleForDecimal, clusterByPartitionColumns,
-				filterOutNullPartitionValues, "");
+		HiveContext sqlContext = new HiveContext(sc);
+		Tables tables = new Tables(sqlContext, settings.scaleFactor);
+		tables.genData(settings.dataLocation, settings.dataFormat, settings.overwrite, settings.partitionTables,
+				settings.useDoubleForDecimal, settings.clusterByPartitionColumns,
+				settings.filterOutNullPartitionValues, "");
 
 		sc.stop();
 	}
 
 	public static void main(String[] args) {
-		generateData();
+		TPCDSSettings settings = TPCDSSettings.createWithDefaults();
+		System.out.println("Creating TPC-DS data using spark, with default settings:");
+		System.out.println(settings);
+		generateData(settings);
 	}
 
 }

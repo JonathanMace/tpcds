@@ -3,72 +3,57 @@ package edu.brown.cs.systems.tpcds.spark;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 
+/** Settings for a TPC-DS dataset */
 public class TPCDSSettings {
-	
-	public static class SettingsInstance {
-		public final int scaleFactor;
-		public final String dataLocation;
-		public final String dataFormat;
-		public final boolean overwrite;
-		public final boolean useDoubleForDecimal;
-		public final boolean partitionTables;
-		public final boolean clusterByPartitionColumns;
-		public final boolean filterOutNullPartitionValues;
-		public SettingsInstance(Config config) {
-			scaleFactor = config.getInt("scaleFactor");
-			dataLocation = config.getString("dataLocation");
-			dataFormat = config.getString("dataFormat");
-			overwrite = config.getBoolean("overwrite");
-			useDoubleForDecimal = config.getBoolean("useDoubleForDecimal");
-			partitionTables = config.getBoolean("partitionTables");
-			clusterByPartitionColumns = config.getBoolean("clusterByPartitionColumns");
-			filterOutNullPartitionValues = config.getBoolean("filterOutNullPartitionValues");
-		}
-	}
-	
-	private static SettingsInstance defaults = null;
-	
-	public static SettingsInstance defaults() {
-		if (defaults == null) {
-			synchronized(TPCDSSettings.class) {
-				if (defaults == null) {
-					defaults = new SettingsInstance(ConfigFactory.load().getConfig("tpcds"));
-				}
-			}
-		}
-		return defaults;
-	}
-	
-	public static int scaleFactor() {
-		return defaults().scaleFactor;
-	}
-	
-	public static String dataLocation() {
-		return defaults().dataLocation;
-	}
-	
-	public static String dataFormat() {
-		return defaults().dataFormat;
-	}
-	
-	public static boolean overwrite() {
-		return defaults().overwrite;
-	}
-	
-	public static boolean useDoubleForDecimal() {
-		return defaults().useDoubleForDecimal;
-	}
-	
-	public static boolean partitionTables() {
-		return defaults().partitionTables;
-	}
-	
-	public static boolean clusterByPartitionColumns() {
-		return defaults().clusterByPartitionColumns;
-	}
-	
-	public static boolean filterOutNullPartitionValues() {
-		return defaults().filterOutNullPartitionValues;
+
+	public int scaleFactor;
+	public String dataLocation;
+	public String dataFormat;
+	public boolean overwrite;
+	public boolean useDoubleForDecimal;
+	public boolean partitionTables;
+	public boolean clusterByPartitionColumns;
+	public boolean filterOutNullPartitionValues;
+
+	private TPCDSSettings(Config config) {
+		scaleFactor = config.getInt("scaleFactor");
+		dataLocation = config.getString("dataLocation");
+		dataFormat = config.getString("dataFormat");
+		overwrite = config.getBoolean("overwrite");
+		useDoubleForDecimal = config.getBoolean("useDoubleForDecimal");
+		partitionTables = config.getBoolean("partitionTables");
+		clusterByPartitionColumns = config.getBoolean("clusterByPartitionColumns");
+		filterOutNullPartitionValues = config.getBoolean("filterOutNullPartitionValues");
 	}
 
+	/**
+	 * Create TPC-DS settings, taking values from the default typesafe config.
+	 * This call is equivalent to
+	 * {@code createFromConfig(ConfigFactory.load().getConfig("tpcds"))}
+	 */
+	public static TPCDSSettings createWithDefaults() {
+		return createFromConfig(ConfigFactory.load().getConfig("tpcds"));
+	}
+
+	/**
+	 * Create TPC-DS settings, taking values from the provided typesafe config
+	 * object. The default values are contained in the "tpcds" root config
+	 */
+	public static TPCDSSettings createFromConfig(Config config) {
+		return new TPCDSSettings(config);
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder b = new StringBuilder();
+		b.append("scaleFactor: " + scaleFactor);
+		b.append("dataLocation: " + dataLocation);
+		b.append("dataFormat: " + dataFormat);
+		b.append("overwrite: " + overwrite);
+		b.append("useDoubleForDecimal: " + useDoubleForDecimal);
+		b.append("partitionTables: " + partitionTables);
+		b.append("clusterByPartitionColumns: " + clusterByPartitionColumns);
+		b.append("filterOutNullPartitionValues: " + filterOutNullPartitionValues);
+		return b.toString();
+	}
 }
