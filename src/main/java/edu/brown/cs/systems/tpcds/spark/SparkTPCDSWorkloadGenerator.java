@@ -15,7 +15,9 @@ import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Maps;
 
-import edu.brown.cs.systems.tpcds.Queries;
+import edu.brown.cs.systems.tpcds.QueryUtils;
+import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark;
+import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark.Query;
 
 import com.databricks.spark.sql.perf.tpcds.Tables;
 
@@ -53,12 +55,14 @@ public class SparkTPCDSWorkloadGenerator {
 		System.out.println("Starting SparkTPCDSWorkloadGenerator");
 		
 		SQLContext sql = spinUpWithDefaults();
-		String benchmark = "impala-tpcds-modified-queries";
-		String query = "q19.sql";
-		String q = Queries.loadQuery(benchmark, query);
-		System.out.printf("Running query %s/%s\n", benchmark, query);
-		System.out.println(q);
-		Row[] rows = sql.sql(q).collect();
+		Map<String, Benchmark> allBenchmarks = QueryUtils.load();
+		String benchmarkName = "impala-tpcds-modified-queries";
+		String queryName = "q19.sql";
+		Benchmark benchmark = allBenchmarks.get(benchmarkName);
+		Query query = benchmark.benchmarkQueries.get(queryName);
+		System.out.printf("Running query %s/%s\n", query);
+		System.out.println(query.queryText);
+		Row[] rows = sql.sql(query.queryText).collect();
 		for (Row r : rows) {
 			System.out.println(r);
 		}

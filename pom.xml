@@ -167,7 +167,7 @@
 					<extraJvmArguments>-Xmx16m</extraJvmArguments>
 					<programs>
 						<program>
-							<mainClass>edu.brown.cs.systems.tpcds.Queries</mainClass>
+							<mainClass>edu.brown.cs.systems.tpcds.QueryUtils</mainClass>
 							<id>list-queries</id>
 						</program>
 						<program>
