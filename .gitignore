@@ -1,3 +1,9 @@
+*.iml
+.project
+.settings
+.classpath
+.idea
+.cache-main
 *.dat
 target
 .DS_Store
