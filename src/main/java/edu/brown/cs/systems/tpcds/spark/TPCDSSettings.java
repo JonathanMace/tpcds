@@ -47,13 +47,13 @@ public class TPCDSSettings {
 	public String toString() {
 		StringBuilder b = new StringBuilder();
 		b.append("scaleFactor: " + scaleFactor);
-		b.append("dataLocation: " + dataLocation);
-		b.append("dataFormat: " + dataFormat);
-		b.append("overwrite: " + overwrite);
-		b.append("useDoubleForDecimal: " + useDoubleForDecimal);
-		b.append("partitionTables: " + partitionTables);
-		b.append("clusterByPartitionColumns: " + clusterByPartitionColumns);
-		b.append("filterOutNullPartitionValues: " + filterOutNullPartitionValues);
+		b.append(" dataLocation: " + dataLocation);
+		b.append(" dataFormat: " + dataFormat);
+		b.append(" overwrite: " + overwrite);
+		b.append(" useDoubleForDecimal: " + useDoubleForDecimal);
+		b.append(" partitionTables: " + partitionTables);
+		b.append(" clusterByPartitionColumns: " + clusterByPartitionColumns);
+		b.append(" filterOutNullPartitionValues: " + filterOutNullPartitionValues);
 		return b.toString();
 	}
 }
