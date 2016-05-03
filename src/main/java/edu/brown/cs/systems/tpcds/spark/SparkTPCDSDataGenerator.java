@@ -3,6 +3,7 @@ package edu.brown.cs.systems.tpcds.spark;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.SQLContext;
 
 import com.databricks.spark.sql.perf.tpcds.Tables;
 
@@ -29,7 +30,7 @@ public class SparkTPCDSDataGenerator {
 	public static void generateData(TPCDSSettings settings) {
 		SparkConf conf = new SparkConf().setAppName("TPC-DS generateData");
 		SparkContext sc = new SparkContext(conf);
-		HiveContext sqlContext = new HiveContext(sc);
+		SQLContext sqlContext = new SQLContext(sc);
 		Tables tables = new Tables(sqlContext, settings.scaleFactor);
 		tables.genData(settings.dataLocation, settings.dataFormat, settings.overwrite, settings.partitionTables,
 				settings.useDoubleForDecimal, settings.clusterByPartitionColumns,
