@@ -86,7 +86,7 @@ public class SparkTPCDSWorkloadGenerator {
 		
 		// Create from default settings
 		TPCDSSettings settings = TPCDSSettings.createWithDefaults();
-		System.out.printf("Running query %s on %s dataset $s\n", q, settings.dataFormat, settings.dataLocation);
+		System.out.printf("Running query %s on %s dataset %s\n", q, settings.dataFormat, settings.dataLocation);
 		SparkTPCDSWorkloadGenerator gen = spinUp("SparkTPCDSWorkloadGenerator", settings);
 
 		long postLoad = System.currentTimeMillis();
@@ -100,7 +100,7 @@ public class SparkTPCDSWorkloadGenerator {
 		}
 
 		long postQ = System.currentTimeMillis();
-		System.out.println("Load time: " + (postLoad-preLoad) + ", Query time: " + (postQ-postLoad));
+		System.out.printf("Load time: %d, Query time: %d\n", postLoad-preLoad, postQ-postLoad);
 	}
 
 }
