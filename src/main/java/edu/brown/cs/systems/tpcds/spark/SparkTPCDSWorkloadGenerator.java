@@ -56,7 +56,9 @@ public class SparkTPCDSWorkloadGenerator {
 			System.out.println("Expected argument specifying dataset and query, eg impala-tpcds-modified-queries/q19.sql");
 			return;
 		}
-		
+
+		long preLoad = System.currentTimeMillis();
+
 		// Load the benchmark
 		String[] splits = args[0].split(File.separator);
 		Benchmark b = QueryUtils.load().get(splits[0]);
@@ -86,7 +88,9 @@ public class SparkTPCDSWorkloadGenerator {
 		TPCDSSettings settings = TPCDSSettings.createWithDefaults();
 		System.out.printf("Running query %s on %s dataset $s\n", q, settings.dataFormat, settings.dataLocation);
 		SparkTPCDSWorkloadGenerator gen = spinUp("SparkTPCDSWorkloadGenerator", settings);
-		
+
+		long postLoad = System.currentTimeMillis();
+
 		// Run the query
 		Row[] rows = gen.sqlContext.sql(q.queryText).collect();
 		
@@ -94,6 +98,9 @@ public class SparkTPCDSWorkloadGenerator {
 		for (Row r : rows) {
 			System.out.println(r);
 		}
+
+		long postQ = System.currentTimeMillis();
+		System.out.println("Load time: " + (postLoad-preLoad) + ", Query time: " + (postQ-postLoad));
 	}
 
 }
