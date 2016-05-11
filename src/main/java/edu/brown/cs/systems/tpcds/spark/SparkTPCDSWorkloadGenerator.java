@@ -16,6 +16,7 @@ import com.databricks.spark.sql.perf.tpcds.Tables;
 import edu.brown.cs.systems.tpcds.QueryUtils;
 import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark;
 import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark.Query;
+import edu.brown.cs.systems.baggage.BaggageTags;
 
 public class SparkTPCDSWorkloadGenerator {
 	
@@ -63,6 +64,11 @@ public class SparkTPCDSWorkloadGenerator {
 		String[] splits = args[0].split(File.separator);
 		Benchmark b = QueryUtils.load().get(splits[0]);
 		
+		String qNumStr = splits[1].replace(".sql", "").replace("q","");
+		int qNum = Integer.parseInt(qNumStr);
+		System.out.printf("Setting baggage to use query %d", qNum);
+		BaggageTags.setTenant(qNum);
+
 		// Bad benchmark
 		if (b == null) {
 			System.out.println("Unknown benchmark " + splits[0]);

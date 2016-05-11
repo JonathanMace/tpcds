@@ -8,6 +8,10 @@
 
 	<name>TPC-DS - Spark Workload Generator</name>
 
+    <properties>
+        <tracingplane.version>4.0</tracingplane.version>
+    </properties>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -69,6 +73,82 @@
 			<artifactId>commons-io</artifactId>
 			<version>2.4</version>
 		</dependency>
+        <!-- tracing -->
+        <dependency>
+          <groupId>org.aspectj</groupId>
+          <artifactId>aspectjrt</artifactId>
+          <version>1.8.7</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>tracingplane-common</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>xtrace-common</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>pivottracing-common</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>netro-common</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>retro-common</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>tracingplane-client</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>xtrace-client</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>pivottracing-agent</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>retro-resources</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>retro-throttling</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>tracingplane-aspects</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>xtrace-aspects</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>pivottracing-aspects</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
+        <dependency>
+          <groupId>edu.brown.cs.systems</groupId>
+          <artifactId>retro-aspects</artifactId>
+          <version>${tracingplane.version}</version>
+        </dependency>
 	</dependencies>
 
 	<build>
