@@ -66,7 +66,7 @@ public class SparkTPCDSWorkloadGenerator {
 		
 		String qNumStr = splits[1].replace(".sql", "").replace("q","");
 		int qNum = Integer.parseInt(qNumStr);
-		System.out.printf("Setting baggage to use query %d", qNum);
+		System.out.printf("Setting baggage to use query %d\n", qNum);
 		BaggageTags.setTenant(qNum);
 
 		// Bad benchmark
