@@ -113,13 +113,17 @@ class Tables(sqlContext: SQLContext, scaleFactor: Int) extends Serializable {
         overwrite: Boolean,
         clusterByPartitionColumns: Boolean,
         filterOutNullPartitionValues: Boolean): Unit = {
+      println(s"Begin genData for table $name in database to $location with save mode $mode")
       val mode = if (overwrite) SaveMode.Overwrite else SaveMode.Ignore
 
       val data = df(format != "text")
+      println(s"Got dataframe for format $format")
       val tempTableName = s"${name}_text"
       data.registerTempTable(tempTableName)
+      println(s"Registered temp table $tempTableName") 
 
       val writer = if (partitionColumns.nonEmpty) {
+        println(s"Getting writer for nonEmpty partitionColumns")
         if (clusterByPartitionColumns) {
           val columnString = data.schema.fields.map { field =>
             field.name
@@ -150,16 +154,21 @@ class Tables(sqlContext: SQLContext, scaleFactor: Int) extends Serializable {
         }
       } else {
         // If the table is not partitioned, coalesce the data to a single file.
+        println("Coalesce to a single file")
         data.coalesce(1).write
       }
+      println("A")
       writer.format(format).mode(mode)
       if (partitionColumns.nonEmpty) {
+        println("B")
         writer.partitionBy(partitionColumns : _*)
       }
       println(s"Generating table $name in database to $location with save mode $mode.")
       log.info(s"Generating table $name in database to $location with save mode $mode.")
       writer.save(location)
+      println("Saved")
       sqlContext.dropTempTable(tempTableName)
+      println("Dropped temp table")
     }
 
     def createExternalTable(location: String, format: String, databaseName: String, overwrite: Boolean): Unit = {
