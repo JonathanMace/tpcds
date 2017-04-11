@@ -32,7 +32,7 @@ class Tables(sqlContext: SQLContext, scaleFactor: Int) extends Serializable {
 
   case class Table(name: String, partitionColumns: Seq[String], fields: StructField*) {
     val schema = StructType(fields)
-    val partitions = if (partitionColumns.isEmpty) 1 else 100
+    val partitions = if (partitionColumns.isEmpty) 1 else 20
 
     def nonPartitioned: Table = {
       Table(name, Nil, fields : _*)
