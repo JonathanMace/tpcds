@@ -113,7 +113,7 @@ class Tables(sqlContext: SQLContext, scaleFactor: Int) extends Serializable {
         overwrite: Boolean,
         clusterByPartitionColumns: Boolean,
         filterOutNullPartitionValues: Boolean): Unit = {
-      println(s"Begin genData for table $name in database to $location with save mode $mode")
+      println(s"Begin genData for table $name in database to $location")
       val mode = if (overwrite) SaveMode.Overwrite else SaveMode.Ignore
 
       val data = df(format != "text")
