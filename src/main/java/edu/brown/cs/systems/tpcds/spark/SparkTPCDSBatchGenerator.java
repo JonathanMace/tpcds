@@ -154,10 +154,6 @@ public class SparkTPCDSBatchGenerator {
             Object[] row = { end, iteration, query.benchmarkName(), query.queryName, query, end-begin, successful, errorreason, taskId, taskId+1 };
             statusLog.println(StringUtils.join(row, "\t"));
             statusLog.flush();
-    
-    		long postQ = System.currentTimeMillis();
-    		System.out.printf("Load time: %d, Query time: %d\n", postLoad-preLoad, postQ-postLoad);
-    		xtrace.log(String.format("Load time: %d, Query time: %d", postLoad-preLoad, postQ-postLoad));
 		    
 		    iteration++;
 		}
