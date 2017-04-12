@@ -129,7 +129,7 @@ public class SparkTPCDSWorkloadGenerator {
     
     		long postQ = System.currentTimeMillis();
     		System.out.printf("Load time: %d, Query time: %d\n", postLoad-preLoad, postQ-postLoad);
-    		xtrace.log(String.format("Load time: %d, Query time: %d", postLoad-preLoad, postQ-postLoad));
+    		xtrace.log(String.format("Load time: %d, Query time: %d", postLoad-preLoad, postQ-postLoad), "Baggage", edu.brown.cs.systems.tracingplane.transit_layer.Baggage.take());
 		}
 	}
 

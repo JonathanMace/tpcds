@@ -147,6 +147,7 @@ public class SparkTPCDSBatchGenerator {
     		    end = System.currentTimeMillis();
     		    successful = true;
     		    System.out.printf("%s completed successfully in %.1f seconds\n", query, (end-begin) / 1000.0);
+    		    xtrace.log(String.format("Completed in %.1f seconds", (end-begin)/1000.0), "Baggage", edu.brown.cs.systems.tracingplane.transit_layer.Baggage.take());
     		} catch (Exception e) {
     		    end = System.currentTimeMillis();
     		    System.out.println("Query " + query + " failed due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
