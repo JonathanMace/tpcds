@@ -113,9 +113,8 @@ public class SparkTPCDSWorkloadGenerator {
     		Retro.enableInBaggageCounting(true);
     		
     		String qNumStr = splits[1].replace(".sql", "").replace("q","");
-            int qNum = Integer.parseInt(qNumStr);
-            System.out.printf("Setting baggage to use query %d", qNum);
-            Netro.set("query", String.valueOf(qNum));
+            System.out.printf("Setting baggage to use query %s", qNumStr);
+            Netro.set("query", qNumStr);
     		
     		xtrace.tag("Running TPCDS query", q.queryName, "TPCDS");
     
