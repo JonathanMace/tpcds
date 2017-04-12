@@ -30,7 +30,7 @@ public class SparkTPCDSDataGenerator {
 	public static void generateData(TPCDSSettings settings) {
 		SparkConf conf = new SparkConf().setAppName("TPC-DS generateData");
 		SparkContext sc = new SparkContext(conf);
-		SQLContext sqlContext = new SQLContext(sc);
+		HiveContext sqlContext = new HiveContext(sc);
 		Tables tables = new Tables(sqlContext, settings.scaleFactor);
 		tables.genData(settings.dataLocation, settings.dataFormat, settings.overwrite, settings.partitionTables,
 				settings.useDoubleForDecimal, settings.clusterByPartitionColumns,

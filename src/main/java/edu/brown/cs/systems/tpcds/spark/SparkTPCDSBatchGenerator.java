@@ -8,6 +8,7 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;
@@ -33,7 +34,7 @@ public class SparkTPCDSBatchGenerator {
 	public final TPCDSSettings settings;
 	public final SparkConf sparkConf;
 	public final SparkContext sparkContext;
-	public final SQLContext sqlContext;
+	public final HiveContext sqlContext;
 	public final Tables tables;
 	
 	private SparkTPCDSBatchGenerator(String name, TPCDSSettings settings) {

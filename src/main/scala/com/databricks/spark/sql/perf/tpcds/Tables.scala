@@ -21,9 +21,10 @@ import org.slf4j.LoggerFactory
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.types._
 import org.apache.spark.sql.{Row, SQLContext, SaveMode}
+import org.apache.spark.sql.hive.HiveContext
 import edu.brown.cs.systems.tpcds.Dsdgen
 
-class Tables(sqlContext: SQLContext, scaleFactor: Int) extends Serializable {
+class Tables(sqlContext: HiveContext, scaleFactor: Int) extends Serializable {
   import sqlContext.implicits._
 
   private val log = LoggerFactory.getLogger(getClass)

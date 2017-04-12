@@ -8,6 +8,7 @@ import org.apache.spark.SparkContext;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
 import org.apache.spark.sql.hive.HiveContext;
+import org.apache.spark.sql.hive.HiveContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -31,7 +32,7 @@ public class SparkTPCDSWorkloadGenerator {
 	public final TPCDSSettings settings;
 	public final SparkConf sparkConf;
 	public final SparkContext sparkContext;
-	public final SQLContext sqlContext;
+	public final HiveContext sqlContext;
 	public final Tables tables;
 	
 	private SparkTPCDSWorkloadGenerator(String name, TPCDSSettings settings) {
