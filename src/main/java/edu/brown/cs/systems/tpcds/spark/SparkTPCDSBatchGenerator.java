@@ -151,7 +151,7 @@ public class SparkTPCDSBatchGenerator {
     		    System.out.println("Query " + query + " failed due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
     		    errorreason = e.getClass().getSimpleName();
     		}
-            Object[] row = { end, iteration, query.benchmarkName(), query.queryName, query, end-begin, successful, errorreason, taskId, taskId+1 };
+            Object[] row = { end, iteration, query.benchmarkName(), query.queryName, query, end-begin, successful, errorreason, toHexString(taskId), toHexString(taskId+1) };
             statusLog.println(StringUtils.join(row, "\t"));
             statusLog.flush();
 		    
@@ -159,6 +159,10 @@ public class SparkTPCDSBatchGenerator {
 		}
 		
 		statusLog.close();
+	}
+	
+	public static String toHexString(long value) {
+	    return String.format("%16s", Long.toHexString(value)).replace(' ', '0');
 	}
 
 }
