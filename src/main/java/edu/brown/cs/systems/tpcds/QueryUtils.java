@@ -73,6 +73,10 @@ public class QueryUtils {
 			public String toString() {
 				return String.format("%s/%s", benchmarkName, queryName);
 			}
+			
+			public String benchmarkName() {
+			    return benchmarkName;
+			}
 		}
 	}
 
