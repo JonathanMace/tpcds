@@ -141,6 +141,7 @@ public class SparkTPCDSBatchGenerator {
     		boolean successful = false;
     		String errorreason = "";
     		try {
+    		    System.out.println("Running " + query);
     		    Row[] rows = gen.sqlContext.sql(query.queryText).collect();
     		    end = System.currentTimeMillis();
     		    successful = true;
