@@ -189,6 +189,7 @@ class Tables(sqlContext: HiveContext, scaleFactor: Int) extends Serializable {
       println(s"Creating temporary table $name using data stored in $location.")
       log.info(s"Creating temporary table $name using data stored in $location.")
       sqlContext.read.format(format).load(location).registerTempTable(name)
+      sqlContext.cacheTable(name)
     }
   }
 
