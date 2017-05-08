@@ -1,3 +1,8 @@
+This is the TracingPlane branch.  It adds dependencies from the following two repositories:
+
+http://github.com/brownsys/tracing
+http://github.com/JonathanMace/tracingplane
+
 Usage:
 
 To compile, invoke
