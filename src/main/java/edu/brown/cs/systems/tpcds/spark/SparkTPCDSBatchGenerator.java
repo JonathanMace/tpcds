@@ -11,23 +11,15 @@ import org.apache.spark.SparkContext;
 import org.apache.spark.sql.hive.HiveContext;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SQLContext;
-import org.apache.spark.sql.hive.HiveContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import com.databricks.spark.sql.perf.tpcds.Tables;
-import edu.brown.cs.systems.baggage.Baggage;
-import edu.brown.cs.systems.retro.Netro;
-import edu.brown.cs.systems.retro.Retro;
 import edu.brown.cs.systems.tpcds.QueryUtils;
 import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark;
 import edu.brown.cs.systems.tpcds.QueryUtils.Benchmark.Query;
-import edu.brown.cs.systems.xtrace.XTrace;
-import edu.brown.cs.systems.xtrace.XTraceBaggageInterface;
-import edu.brown.cs.systems.xtrace.logging.XTraceLogger;
 
 public class SparkTPCDSBatchGenerator {
 
-    public static final XTraceLogger xtrace = XTrace.getLogger(SparkTPCDSBatchGenerator.class);
 	public static final Logger log = LoggerFactory.getLogger(SparkTPCDSBatchGenerator.class);
 
 	public final String name;
@@ -120,22 +112,7 @@ public class SparkTPCDSBatchGenerator {
 		
 		int iteration = 1;
 		Long taskId = null;
-		for (Query query : allQueries) {
-    		Baggage.discard();
-    		if (taskId == null) {
-    		    XTrace.startTask(true);
-    		    taskId = XTraceBaggageInterface.getTaskID();
-    		} else {
-    		    // Set a higher task ID so that previous task gets all events if there's a conflict -- this is useful for checking where instrumentation is wrong
-    		    taskId += 10;
-    		    XTrace.setTask(taskId, 0L);
-    		}
-    		Retro.setTenant(3);
-    		Retro.enableInBaggageCounting(true);
-            Netro.set("query", query.queryName);
-    		
-    		xtrace.tag("Running TPCDS query", query.queryName, "TPCDS");
-    
+		for (Query query : allQueries) {    
     		// Run the query
     		long begin = System.currentTimeMillis();
     		long end;
@@ -147,7 +124,6 @@ public class SparkTPCDSBatchGenerator {
     		    end = System.currentTimeMillis();
     		    successful = true;
     		    System.out.printf("%s completed successfully in %.1f seconds\n", query, (end-begin) / 1000.0);
-    		    xtrace.log(String.format("Completed in %.1f seconds", (end-begin)/1000.0), "Baggage", edu.brown.cs.systems.tracingplane.transit_layer.Baggage.take());
     		} catch (Exception e) {
     		    end = System.currentTimeMillis();
     		    System.out.println("Query " + query + " failed due to " + e.getClass().getSimpleName() + ": " + e.getMessage());
